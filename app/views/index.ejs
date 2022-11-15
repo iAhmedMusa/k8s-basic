@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Express CRUD</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <div class="col-6 mt-5 mx-auto">
+      <div class="card border-primary">
+        <div class="card-body">
+          <h4 class="card-title">bKash Customer's Information</h4>
+          <form action="/insert" method="post">
+            <div class="form-group">
+              <label for="name">Full Name: </label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                class="form-control"
+                placeholder=""
+                aria-describedby="helpId"
+                required
+              />
+              <small id="helpId" class="text-muted"
+                >Provide your full name</small
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Bkash Number: </label>
+              <input
+                type="text"
+                name="phone"
+                id="phone"
+                class="form-control"
+                placeholder=""
+                aria-describedby="helpId"
+                required
+              />
+              <small id="helpId" class="text-muted"
+                >Provide your bkash account number</small
+              >
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+              Create Data
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- <%= output %> -->
+
+      <div class="mt-2">
+        <div class="card border-secondary">
+          <div class="card-body">
+            <h4 class="card-title">Customers Details</h4>
+            <table class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Name</th>
+                  <th>Bkash Number</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <% for(let i = 0; i < output.length; i++) {%>
+              <tbody>
+                <tr>
+                  <td><%= output[i].name %></td>
+                  <td><%= output[i].phone %></td>
+                  <td>
+                    <a href="/create/<%= output[i]._id %>">Edit</a>
+                    <a href="/delete/<%= output[i]._id %>">Delete</a>
+                  </td>
+                </tr>
+              </tbody>
+              <% } %>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

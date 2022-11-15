@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bkash-app
+  labels:
+    app: bkash-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bkash-app
+  template:
+    metadata:
+      labels:
+        app: bkash-app
+    spec:
+      containers:
+        - name: bkash-app
+          image: ahmedmusa/express-crud-mongo
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-db-name
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-root-username
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-root-password
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-configmap
+                  key: database_url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bkash-app-service
+spec:
+  selector:
+    app: bkash-app
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 3000
+      nodePort: 30300
