@@ -20,6 +20,12 @@ To access the DB GUI,
 http://acfe302d1947d4193bd4995753d14104-1945513419.ap-southeast-1.elb.amazonaws.com:8081/
 ```
 
+Container Registry,
+
+```
+https://hub.docker.com/r/ahmedmusa/express-crud-mongo/tags
+```
+
 ### Docker file location
 
 /app/Dockerfile
