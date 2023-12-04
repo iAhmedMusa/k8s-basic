@@ -1,31 +1,69 @@
-# Assessment details
+# CRUD Application with Express.js, EJS, MongoDB, MongoDB UI Deployed on Kubernetes Cluster
 
-A basic application deployed into a K8s cluster. Used EKS. There are three microservices
+This README file provides an overview and instructions for a basic CRUD (Create, Read, Update, Delete) application built using Express.js, EJS, MongoDB, and deployed on a Kubernetes (K8s) cluster. The deployment utilizes Kubernetes components such as Deployment, Service, ConfigMap, and Secrets.
 
-- A nodejs application (Custom dockerized app)
-- MongoDB GUI (Mongo Express)
-- MongoDB as Database
+## Getting Started
 
-### Links
+### Kubernetes Deployment
 
-To access the application,
+1. Install and configure Minikube/Docker-desktop or use a Kubernetes cluster of your choice.
 
-```
-http://ace718caf1db34618bdf141a18c7370e-785151129.ap-southeast-1.elb.amazonaws.com:8080/
-```
+2. Deploy the application using Kubernetes manifests:
 
-To access the DB GUI,
+3. Clone the repository:
 
-```
-http://acfe302d1947d4193bd4995753d14104-1945513419.ap-southeast-1.elb.amazonaws.com:8081/
+```bash
+git clone https://github.com/iAhmedMusa/k8s-basic.git
+cd k8s-basic
 ```
 
-Container Registry,
+4. Create a namespace `ns1`
 
+```bash
+kubectl create namespace ns1
 ```
-https://hub.docker.com/r/ahmedmusa/express-crud-mongo/tags
+
+5. Deploy Secrets, ConfigMap, Deployment, services:
+
+```bash
+- kubectl apply -f mongo-secret.yaml
+- kubectl apply -f mongo-configmap.yaml
+- kubectl apply -f mongo.yaml
+- kubectl apply -f mongo-express.yaml
+- kubectl apply -f ahmed-app.yaml
 ```
 
-### Docker file location
+6. Monitor the deployment:
 
-/app/Dockerfile
+```bash
+kubectl get pods -n ns1
+```
+
+5. Access the application:
+
+```bash
+- kubectl get services -n ns1
+```
+Visit the external IP or NodePort to access the application.
+
+The application will be accessible at `http://localhost:5500`.
+
+MongoDB UI will be accessible at `http://localhost:5678`.
+
+
+## Application Structure
+
+The application follows a structure:
+
+- `server.js`: Main application file.
+- `views/`: EJS templates.
+
+
+
+## MongoDB UI
+
+MongoDB UI is included in the deployment for easy database management. Access it using the provided external IP or NodePort.
+
+## License
+
+This CRUD application is open-source and distributed under the [MIT License](LICENSE). Feel free to use, modify, and distribute as needed.

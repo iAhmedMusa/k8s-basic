@@ -22,10 +22,10 @@
     <div class="col-6 mt-5 mx-auto">
       <div class="card border-primary">
         <div class="card-body">
-          <h4 class="card-title">bKash Customer's Information</h4>
+          <h4 class="card-title">Person's Information</h4>
           <form action="/insert" method="post">
             <div class="form-group">
-              <label for="name">Full Name: </label>
+              <label for="name">Name: </label>
               <input
                 type="text"
                 name="name"
@@ -35,13 +35,11 @@
                 aria-describedby="helpId"
                 required
               />
-              <small id="helpId" class="text-muted"
-                >Provide your full name</small
-              >
+              <small id="helpId" class="text-muted">Provide your Name</small>
             </div>
 
             <div class="form-group">
-              <label for="phone">Bkash Number: </label>
+              <label for="phone">Phone: </label>
               <input
                 type="text"
                 name="phone"
@@ -51,9 +49,7 @@
                 aria-describedby="helpId"
                 required
               />
-              <small id="helpId" class="text-muted"
-                >Provide your bkash account number</small
-              >
+              <small id="helpId" class="text-muted">Provide Phone</small>
             </div>
 
             <button type="submit" class="btn btn-primary btn-block">
@@ -68,12 +64,12 @@
       <div class="mt-2">
         <div class="card border-secondary">
           <div class="card-body">
-            <h4 class="card-title">Customers Details</h4>
+            <h4 class="card-title">Persons</h4>
             <table class="table table-striped">
               <thead class="thead-dark">
                 <tr>
                   <th>Name</th>
-                  <th>Bkash Number</th>
+                  <th>Phone</th>
                   <th>Action</th>
                 </tr>
               </thead>

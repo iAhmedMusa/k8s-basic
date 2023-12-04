@@ -1,17 +1,17 @@
 {
-  "name": "express_app",
+  "name": "crud-express-mongo",
   "version": "1.0.0",
-  "description": "CRUD by NodeJs server with Express js using mongodb",
+  "description": "Create-Read-Update-Delete by NodeJs server with Express js using mongodb",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [
     "node"
   ],
-  "author": "Ahmed Musa",
+  "author": "FjRobin",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",

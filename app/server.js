@@ -1,46 +1,45 @@
 const express = require("express");
-require("dotenv").config();
 const bodyParser = require("body-parser")
 const app = express()
-const port = 3000
 const MongoClient = require("mongodb").MongoClient;
 let ObjectId = require("mongodb").ObjectID;
 
+// MongoDB config
+const db_server = process.env.MONGODB_SERVER
+const db_user = process.env.MONGODB_ADMINUSERNAME
+const db_password = process.env.MONGODB_ADMINPASSWORD
+
+const port = process.env.PORT || 3000;
+
 app.listen(port, () => {
-    console.log(`System listening on port: ${port}`);
+    console.log(`System listening on :${port}`);
 });
 
-const dbHost = process.env.DB_HOST || "";
-const dbUser = process.env.DB_USER || "";
-const dbPass = process.env.DB_PASS || "";
-const dbName = process.env.DB_NAME || "";
-
-// const dbHost = process.env.DB_HOST || "";
-// const dbPort = process.env.DB_PORT || "";
-// const dbUser = process.env.DB_USER || "";
-// const dbPass = process.env.DB_PASS || "";
-// const dbName = process.env.DB_NAME || "";
-
-const url = "mongodb://"+dbUser+":"+dbPass+"@"+dbHost;
+const url = `mongodb://${db_user}:${db_password}@${db_server}:27017`;
+const dbName = process.env.DB_NAME;
 let db;
 
 MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     if (err) return console.log(err);
     
     db = client.db(dbName);
-    console.log(`Database connection connected with ${url}`)
-    console.log(`Database Name: ${dbName}`)
+    console.log(`Connected MongoDB with ${url}`)
+    console.log(`Database: ${dbName}`)
 
     const personsCollection = db.collection("persons");
     
+
     app.set('view engine', 'ejs')
 
     app.use(bodyParser.urlencoded({ extended: true }));
 
     app.get("/", (req, res) => {
+        // res.sendFile(__dirname + "/index.html");
         personsCollection.find().toArray()
             .then((results) => {
+                // res.send(results)
                 res.render('index.ejs', { output: results })
+                // console.log('at root directory');
             })
             .catch((e) => console.error(e));
     });
@@ -86,4 +85,16 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
             })
             .catch((e) => console.error(e));
     });
+
+
+    app.get("/api", (req, res) => {
+        personsCollection.find().toArray()
+            .then((rs) => {
+                res.send(rs);
+            })
+            .catch((e) => console.error(e));
+    })
+
+
 });
+// console.log('May Allah be with ME');

@@ -1,56 +1,59 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bkash-app
+  namespace: ns1
+  name: ahmed-app
   labels:
-    app: bkash-app
+    app: ahmed-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: bkash-app
+      app: ahmed-app
   template:
     metadata:
       labels:
-        app: bkash-app
+        app: ahmed-app
     spec:
       containers:
-        - name: bkash-app
-          image: ahmedmusa/express-crud-mongo
+        - name: ahmed-app
+          image: ahmedmusa/express-crud-mongo:2.0
           ports:
             - containerPort: 3000
           env:
+            - name: MONGODB_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-configmap
+                  key: database_server
+            - name: MONGODB_ADMINUSERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-root-username
+            - name: MONGODB_ADMINPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-root-password
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
                   key: mongo-db-name
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: mongodb-secret
-                  key: mongo-root-username
-            - name: DB_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: mongodb-secret
-                  key: mongo-root-password
-            - name: DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: mongodb-configmap
-                  key: database_url
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: bkash-app-service
+  namespace: ns1
+  name: ahmed-app-service
 spec:
   selector:
-    app: bkash-app
+    app: ahmed-app
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 8080
+      port: 5500
       targetPort: 3000
       nodePort: 30300
